@@ -6,8 +6,8 @@ function Rating({ value, text, color }) {
   return (
     <div className='rating'>
       {
-        numStars.map(rate => (
-          <span>
+        numStars.map((rate, i) => (
+          <span key={i}>
             <i
               style={{ color }}
               className={
