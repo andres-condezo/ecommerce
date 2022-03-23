@@ -39,4 +39,4 @@ def getProduct(request, pk):
     if prod['_id'] == pk:
       return Response(prod)
 
-  return None
+  return Response(None)
