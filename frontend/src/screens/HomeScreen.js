@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "react-bootstrap";
 import Product from "../components/Product";
 import { listProducts } from "../store/actions/productActions";
+import Spinner from "../components/Loader";
 
 function HomeScreen() {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ function HomeScreen() {
     <div>
       <h1>Latest products</h1>
       {loading ? (
-        <h2>Loading ...</h2>
+        <Spinner />
       ) : error ? (
         <h3>{error}</h3>
       ) : (
