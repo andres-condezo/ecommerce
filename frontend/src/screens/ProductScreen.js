@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Col, Image, ListGroup, Row } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Form,
+  Image,
+  ListGroup,
+  Row,
+} from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import products from "../products";
 import Rating from "../components/Rating";
-import axios from "axios";
 import { listProductDetails } from "../store/actions/productActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 
 function ProductScreen() {
+  const [qty, setQty] = useState();
   const params = useParams();
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
@@ -17,7 +24,7 @@ function ProductScreen() {
 
   useEffect(() => {
     dispatch(listProductDetails(params.id));
-  }, []);
+  }, [dispatch, params.id]);
 
   return (
     <>
@@ -71,6 +78,28 @@ function ProductScreen() {
                     </Col>
                   </Row>
                 </ListGroup.Item>
+
+                {product.countInStock > 0 && (
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Qty</Col>
+                      <Col xs="auto">
+                        <Form.Control
+                          as="select"
+                          value={qty}
+                          onChange={(e) => setQty(e.target.value)}
+                        >
+                          {[...Array(product.countInStock).keys()].map((i) => (
+                            <option key={i + 1} value={i + 1}>
+                              {i + 1}
+                            </option>
+                          ))}
+                        </Form.Control>
+                        {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                )}
 
                 <ListGroup.Item>
                   <Button
