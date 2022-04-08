@@ -8,7 +8,7 @@ import {
   ListGroup,
   Row,
 } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Rating from "../components/Rating";
 import { listProductDetails } from "../store/actions/productActions";
@@ -16,8 +16,9 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 
 function ProductScreen() {
-  const [qty, setQty] = useState();
   const params = useParams();
+  const navigate = useNavigate();
+  const [qty, setQty] = useState();
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
@@ -25,6 +26,11 @@ function ProductScreen() {
   useEffect(() => {
     dispatch(listProductDetails(params.id));
   }, [dispatch, params.id]);
+
+  const addToCartHandler = () => {
+    alert(`/cart/${params.id}?qty=${qty}`);
+    navigate(`/cart/${params.id}?qty=${qty}`);
+  };
 
   return (
     <>
@@ -103,6 +109,7 @@ function ProductScreen() {
 
                 <ListGroup.Item>
                   <Button
+                    onClick={addToCartHandler}
                     type="button"
                     className="btn-block"
                     disabled={product.countInStock === 0}
