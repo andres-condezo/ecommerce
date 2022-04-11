@@ -28,7 +28,6 @@ function ProductScreen() {
   }, [dispatch, params.id]);
 
   const addToCartHandler = () => {
-    alert(`/cart/${params.id}?qty=${qty}`);
     navigate(`/cart/${params.id}?qty=${qty}`);
   };
 
