@@ -18,7 +18,7 @@ import Message from "../components/Message";
 function ProductScreen() {
   const params = useParams();
   const navigate = useNavigate();
-  const [qty, setQty] = useState();
+  const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
