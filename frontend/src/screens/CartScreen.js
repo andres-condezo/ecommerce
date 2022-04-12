@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation, useParams } from "react-router-dom";
 import Message from "../components/Message";
-import { addToCart } from "../store/actions/cartActions";
+import { addToCart, removeFromCart } from "../store/actions/cartActions";
 
 function CartScreen() {
   const params = useParams();
@@ -31,7 +31,9 @@ function CartScreen() {
     }
   }, [dispatch, productId, qty]);
 
-  const removeFromCartHandler = (productId) => {};
+  const removeFromCartHandler = (productId) => {
+    dispatch(removeFromCart(productId));
+  };
 
   const checkoutHandler = () => {
     navigate("/login?redirect=shipping");
@@ -81,7 +83,7 @@ function CartScreen() {
                     <Button
                       type="button"
                       variant="light"
-                      oncClick={() => removeFromCartHandler(item.product)}
+                      onClick={() => removeFromCartHandler(item.product)}
                     >
                       <i className="fas fa-trash"></i>
                     </Button>
