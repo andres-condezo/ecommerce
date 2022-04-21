@@ -1,11 +1,9 @@
-from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .models import Product
-from .serializers import ProductSerializer
-from .products import products
+from .serializers import (ProductSerializer, UserSerializer)
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -51,6 +49,13 @@ def getRoutes(request):
   ]
   # return JsonResponse(routes, safe=False)
   return Response(routes)
+
+
+@api_view(['GET'])
+def geUserProfile(request):
+  user = request.user
+  serializer = UserSerializer(user, many=False)
+  return Response(serializer.data)
 
 
 @api_view(['GET'])
