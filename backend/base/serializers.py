@@ -27,8 +27,6 @@ class UserSerializer(serializers.ModelSerializer):
         if name == '' and hasattr(obj, 'email'):
             name = obj.email
         
-        print(dir(obj))
-
         return name
 
 
