@@ -9,6 +9,7 @@ urlpatterns = [
   
   path('', views.getRoutes, name='routes'),
 
+  path('users/register/', views.registerUser, name='user_register'),
   path('users/profile/', views.geUserProfile, name='users_profile'),
   path('users/', views.getUsers, name='users'),
 
