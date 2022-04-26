@@ -67,5 +67,5 @@ def registerUser(request):
     serializer = UserSerializerWithToken(user, many=False)
     return Response(serializer.data)
   except:
-    message = {'datail': 'User with this email already exists'}
+    message = {'detail': 'User with this email already exists'}
     return Response(message, status=status.HTTP_400_BAD_REQUEST)
