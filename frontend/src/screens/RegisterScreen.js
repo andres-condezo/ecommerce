@@ -1,7 +1,11 @@
-import React, { useState } from "react";
-import { FormGroup } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Form, FormGroup, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
+import { FormContainer } from "../components/FormContainer";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 import { register } from "../store/actions/userActions";
 
 export const RegisterScreen = () => {
