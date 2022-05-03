@@ -89,7 +89,7 @@ export const RegisterScreen = () => {
           <Form.Label>Confirm Password</Form.Label>
           <Form.Control
             required
-            type="confirmPassword"
+            type="password"
             placeholder="Confirm Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
