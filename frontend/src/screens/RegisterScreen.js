@@ -18,8 +18,8 @@ export const RegisterScreen = () => {
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { loading, userInfo, error } = userLogin;
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, userInfo, error } = userRegister;
 
   useEffect(() => {
     if (userInfo) {
