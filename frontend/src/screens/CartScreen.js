@@ -7,10 +7,14 @@ import { addToCart } from '../actions/cartActions';
 
 function CartScreen({history}) {
   const [ searchParams, setSearchParams ] = useSearchParams();
-  const { productId } = useParams();
+  // const { productId } = useParams();
+  const params = useParams();
+  const productId = params.id
   // const qty = searchParams.get('qty');
   const location = useLocation();
-  const qty = location.state ? Number(location.state) : 1;
+  // const qty = location.state ? Number(location.state) : 1;
+  const qty = location.search ? Number(location.search.split('=')[1]) : 1;
+  // const qty = location.search ? Number(location.search.split("=")[1]) : 1;
 
   console.log('qty:', qty);
   console.log('qty,id =>', qty,productId);

@@ -20,11 +20,11 @@ function ProductScreen(){
   }, [dispatch, product_id.id])
 
   const addToCartHandler = () => {
-    // navigate(`/cart/${product_id.id}?qty=${qty}`)
-    navigate({
-      pathname: `/cart/${product_id.id}`,
-      search: `?${createSearchParams(qty)}`
-    });
+    navigate(`/cart/${product_id.id}?qty=${qty}`)
+    // navigate({
+      // pathname: `/cart/${product_id.id}`,
+      // search: `?${createSearchParams(qty)}`
+    // });
   }
 
   return(
