@@ -38,7 +38,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def geUserProfile(request):
+def getUserProfile(request):
   user = request.user
   serializer = UserSerializer(user, many=False)
   return Response(serializer.data)
