@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams, useNavigate, createSearchParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Row, Col, Image, ListGroup, Button, Card, Form } from 'react-bootstrap';
 import Rating from '../components/Rating';
 import Loader from '../components/Loader';
@@ -21,10 +21,6 @@ function ProductScreen(){
 
   const addToCartHandler = () => {
     navigate(`/cart/${product_id.id}?qty=${qty}`)
-    // navigate({
-      // pathname: `/cart/${product_id.id}`,
-      // search: `?${createSearchParams(qty)}`
-    // });
   }
 
   return(
