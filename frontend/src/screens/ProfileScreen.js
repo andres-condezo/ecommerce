@@ -4,7 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { getUserDetails } from "../store/actions/userActions";
+import {
+  getUserDetails,
+  updateUserProfile,
+} from "../store/actions/userActions";
+import { USER_UPDATE_PROFILE_RESET } from "../store/constants/userConstants";
 
 const ProfileScreen = () => {
   const [name, setName] = useState("");
@@ -23,20 +27,24 @@ const ProfileScreen = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+  const { success } = userUpdateProfile;
+
   useEffect(() => {
     if (!userInfo) {
       navigate(`/login`);
       return;
     }
 
-    if (!user || !user.name) {
+    if (!user || !user.name || success) {
+      dispatch({ type: USER_UPDATE_PROFILE_RESET });
       dispatch(getUserDetails("profile"));
       return;
     }
 
     setName(user.name);
     setEmail(user.email);
-  }, [dispatch, navigate, userInfo, user]);
+  }, [dispatch, navigate, userInfo, user, success]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -46,7 +54,14 @@ const ProfileScreen = () => {
       return;
     }
 
-    console.log("Updating profile ...");
+    dispatch(
+      updateUserProfile({
+        name,
+        email,
+        password,
+        id: user._id,
+      })
+    );
   };
 
   return (
