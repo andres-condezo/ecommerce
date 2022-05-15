@@ -125,7 +125,11 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(`/api/users/profile/update/`, config);
+    const { data } = await axios.put(
+      `/api/users/profile/update/`,
+      user,
+      config
+    );
 
     dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
