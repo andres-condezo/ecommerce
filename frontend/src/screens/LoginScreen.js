@@ -16,7 +16,7 @@ export const LoginScreen = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const redirect = location.search ? location.search.split("=")[1] : "/";
+  const redirect = location.search ? location.search.split("=")[1] : "";
 
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, userInfo, error } = userLogin;
