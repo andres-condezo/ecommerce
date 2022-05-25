@@ -30,7 +30,7 @@ export const PaymentScreen = () => {
     <FormContainer>
       <CheckoutSteps step1 step2 step3 />
 
-      <Form onSUmbmit={submitHandler}>
+      <Form onSubmit={submitHandler}>
         <Form.Group>
           <Form.Label as="legend">Select Method</Form.Label>
 
