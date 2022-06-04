@@ -4,7 +4,7 @@ from rest_framework.response import Response
 
 from rest_framework import status
 
-from backend.base.models import Order, OrderItem, Product, ShippingAddress
+from base.models import Order, OrderItem, Product, ShippingAddress
 from base.serializers import OrderSerializer
 
 
