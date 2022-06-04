@@ -10,7 +10,7 @@ from base.serializers import OrderSerializer
 
 @api_view(['POST'])
 @permission_classes(['IsAuthenticated'])
-def addOrederItems(req):
+def addOrderItems(req):
 
   user = req.user
   data = req.data
