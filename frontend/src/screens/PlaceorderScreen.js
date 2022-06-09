@@ -34,7 +34,7 @@ export const PlaceorderScreen = () => {
 
   useEffect(() => {
     if (success) {
-      navigate(`/order/${order.id}`);
+      navigate(`/order/${order._id}`);
 
       dispatch({ type: ORDER_CREATE_RESET });
     }
@@ -43,7 +43,7 @@ export const PlaceorderScreen = () => {
   const placeOrder = () => {
     dispatch(
       createOrder({
-        orderItems: cart.orderItems,
+        orderItems: cart.cartItems,
         shippingAddress: cart.shippingAddress,
         paymentMethod: cart.paymentMethod,
         itemsPrice: cart.itemsPrice,
@@ -87,7 +87,7 @@ export const PlaceorderScreen = () => {
               ) : (
                 <ListGroup variant="flush">
                   {cart.cartItems.map((item, index) => (
-                    <ListGroup.Item>
+                    <ListGroup.Item key={index}>
                       <Row>
                         <Col md={1}>
                           <Image
@@ -161,7 +161,7 @@ export const PlaceorderScreen = () => {
                   type="button"
                   className="btn-block"
                   disabled={cart.cartItems === 0}
-                  onCLick={placeOrder}
+                  onClick={placeOrder}
                 >
                   Place Order
                 </Button>
