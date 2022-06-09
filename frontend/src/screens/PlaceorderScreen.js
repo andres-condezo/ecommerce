@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { CheckoutSteps } from "../components/CheckoutSteps";
 import Message from "../components/Message";
 import { createOrder } from "../store/actions/orderActions";
+import { ORDER_CREATE_RESET } from "../store/constants/orderConstants";
 
 export const PlaceorderScreen = () => {
   const navigate = useNavigate();
@@ -34,6 +35,8 @@ export const PlaceorderScreen = () => {
   useEffect(() => {
     if (success) {
       navigate(`/order/${order.id}`);
+
+      dispatch({ type: ORDER_CREATE_RESET });
     }
   }, [success, navigate]);
 
