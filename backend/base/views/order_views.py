@@ -18,7 +18,7 @@ def addOrderItems(req):
   
   orderItems = data['orderItems']
 
-  if orderItems and len(orderItems):
+  if orderItems and len(orderItems) == 0:
     return Response({'detail': 'No Order Items'}, status=status.HTTP_400_BAD_REQUEST)
 
   order = Order.objects.create(
