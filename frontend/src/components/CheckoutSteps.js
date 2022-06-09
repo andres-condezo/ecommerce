@@ -28,15 +28,17 @@ export const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
 
   return (
     <Nav className="justify-content-center mb-4">
-      {stepsArr.map(({ step, to, label }) =>
+      {stepsArr.map(({ step, to, label }, ind) =>
         step ? (
-          <Nav.Item>
+          <Nav.Item key={ind}>
             <LinkContainer to={to}>
               <Nav.Link>{label}</Nav.Link>
             </LinkContainer>
           </Nav.Item>
         ) : (
-          <Nav.Link disabled>{label}</Nav.Link>
+          <Nav.Link key={ind} disabled>
+            {label}
+          </Nav.Link>
         )
       )}
     </Nav>
