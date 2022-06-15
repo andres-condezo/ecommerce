@@ -23,6 +23,7 @@ def addOrderItems(req):
 
   order = Order.objects.create(
     user=user,
+    shippingPrice=data['shippingPrice'],
     paymentMethod=data['paymentMethod'],
     taxPrice=data['taxPrice'],
     totalPrice=data['totalPrice']
