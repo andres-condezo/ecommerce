@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Card, Col, Image, ListGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { CheckoutSteps } from "../components/CheckoutSteps";
 import { getOrderDetails } from "../store/actions/orderActions";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
