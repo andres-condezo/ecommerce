@@ -15,7 +15,6 @@ export const OrderScreen = () => {
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, error, loading } = orderDetails;
 
-  console.log(order);
   if (!loading && !error) {
     order.itemsPrice = order.orderItems.reduce(
       (acc, item) => acc + item.price * item.qty,
@@ -24,7 +23,6 @@ export const OrderScreen = () => {
   }
 
   useEffect(() => {
-    console.log("Dispatch");
     if (!order || order._id !== Number(orderId)) {
       dispatch(getOrderDetails(orderId));
     }
@@ -44,12 +42,30 @@ export const OrderScreen = () => {
             <ListGroup.Item>
               <h2>Shipping</h2>
               <p>
+                <strong>Name: </strong>
+                {order.user.name}
+              </p>
+
+              <p>
+                <strong>Email: </strong>
+                <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
+              </p>
+
+              <p>
                 <strong>Shipping: </strong>
                 {order.shippingAddress.address}, {order.shippingAddress.city}
                 {"  "}
                 {order.shippingAddress.postalCode},{"  "}
                 {order.shippingAddress.country}
               </p>
+
+              {order.isDelivered ? (
+                <Message variant="success">
+                  Delivered on {order.deliveredAt}
+                </Message>
+              ) : (
+                <Message variant="warning">Not Delivered</Message>
+              )}
             </ListGroup.Item>
 
             <ListGroup.Item>
@@ -58,6 +74,12 @@ export const OrderScreen = () => {
                 <strong>Method: </strong>
                 {order.paymentMethod}
               </p>
+
+              {order.isPaid ? (
+                <Message variant="success">Paid on {order.paidAt}</Message>
+              ) : (
+                <Message variant="warning">Not Paid</Message>
+              )}
             </ListGroup.Item>
 
             <ListGroup.Item>
