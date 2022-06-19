@@ -2,11 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Card, Col, Image, ListGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import {
-  getOrderDetails,
-  orderPay,
-  payOrder,
-} from "../store/actions/orderActions";
+import { PayPalButton } from "react-paypal-button-v2";
+import { getOrderDetails, payOrder } from "../store/actions/orderActions";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 
@@ -41,7 +38,7 @@ export const OrderScreen = () => {
       setSdkReady(true);
     };
 
-    document.appendChild(scriptNode);
+    document.body.appendChild(scriptNode);
   };
 
   useEffect(() => {
@@ -195,6 +192,21 @@ export const OrderScreen = () => {
               <ListGroup.Item>
                 {error && <Message variant="danger">{error}</Message>}
               </ListGroup.Item>
+
+              {!order.isPaid && (
+                <ListGroup.Item>
+                  {loadingPay && <Loader />}
+
+                  {!sdkReady ? (
+                    <Loader />
+                  ) : (
+                    <PayPalButton
+                      amount={order.totalPrice}
+                      onSuccess={successPaymentHandler}
+                    />
+                  )}
+                </ListGroup.Item>
+              )}
             </ListGroup>
           </Card>
         </Col>
