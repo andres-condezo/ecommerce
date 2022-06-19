@@ -6,6 +6,7 @@ import { PayPalButton } from "react-paypal-button-v2";
 import { getOrderDetails, payOrder } from "../store/actions/orderActions";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import { ORDER_PAY_RESET } from "../store/constants/orderConstants";
 
 export const OrderScreen = () => {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ export const OrderScreen = () => {
 
   useEffect(() => {
     if (successPay || !order || order._id !== Number(orderId)) {
+      dispatch({ type: ORDER_PAY_RESET });
       dispatch(getOrderDetails(orderId));
       return;
     }
