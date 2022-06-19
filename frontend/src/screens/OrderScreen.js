@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Card, Col, Image, ListGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { getOrderDetails } from "../store/actions/orderActions";
+import {
+  getOrderDetails,
+  orderPay,
+  payOrder,
+} from "../store/actions/orderActions";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 
@@ -57,6 +61,10 @@ export const OrderScreen = () => {
 
     setSdkReady(true);
   }, [dispatch, successPay, order, orderId]);
+
+  const successPaymentHandler = (paymentResult) => {
+    dispatch(payOrder(orderId, paymentResult));
+  };
 
   return loading ? (
     <Loader />
