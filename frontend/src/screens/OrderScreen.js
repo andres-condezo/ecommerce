@@ -17,6 +17,9 @@ export const OrderScreen = () => {
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, error, loading } = orderDetails;
 
+  const orderPay = useSelector((state) => state.orderPay);
+  const { loading: loadingPay, success: successPay } = orderPay;
+
   if (!loading && !error) {
     order.itemsPrice = order.orderItems.reduce(
       (acc, item) => acc + item.price * item.qty,
@@ -24,7 +27,7 @@ export const OrderScreen = () => {
     );
   }
 
-  const addPAypalScript = () => {
+  const addPaypalScript = () => {
     const scriptNode = document.createElement("script");
     scriptNode.type = "text/javascript";
     scriptNode.src =
@@ -38,10 +41,22 @@ export const OrderScreen = () => {
   };
 
   useEffect(() => {
-    if (!order || order._id !== Number(orderId)) {
+    if (successPay || !order || order._id !== Number(orderId)) {
       dispatch(getOrderDetails(orderId));
+      return;
     }
-  }, [dispatch, order, orderId]);
+
+    if (order.isPaid) {
+      return;
+    }
+
+    if (!window.paypal) {
+      addPaypalScript();
+      return;
+    }
+
+    setSdkReady(true);
+  }, [dispatch, successPay, order, orderId]);
 
   return loading ? (
     <Loader />
