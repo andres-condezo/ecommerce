@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Col, Image, ListGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
@@ -8,6 +8,8 @@ import Loader from "../components/Loader";
 
 export const OrderScreen = () => {
   const dispatch = useDispatch();
+
+  const [sdkReady, setSdkReady] = useState(false);
 
   const params = useParams();
   const orderId = params.id;
@@ -21,6 +23,19 @@ export const OrderScreen = () => {
       0
     );
   }
+
+  const addPAypalScript = () => {
+    const scriptNode = document.createElement("script");
+    scriptNode.type = "text/javascript";
+    scriptNode.src =
+      "https://www.paypal.com/sdk/js?client-id=AZsqnCzbsJnLDkHVwBNZ5mQkDuSf7pKoNBw2Kje4QKMk7uhFEUenO2sleaIDcuGAkGq6ukJXCa4hjGPH";
+    scriptNode.async = true;
+    scriptNode.onload = () => {
+      setSdkReady(true);
+    };
+
+    document.appendChild(scriptNode);
+  };
 
   useEffect(() => {
     if (!order || order._id !== Number(orderId)) {
