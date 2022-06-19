@@ -80,7 +80,7 @@ def getOrderById(request, pk):
 def updateOrderToPay(request, pk):
   order = Order.objects.get(_id=pk)
 
-  order.isPAid = True
+  order.isPaid = True
   order.paidAt = datetime.now()
   order.save()
 
