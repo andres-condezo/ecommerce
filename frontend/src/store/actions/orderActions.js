@@ -136,11 +136,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(
-      `/api/orders/myorders/`,
-      paymentResult,
-      config
-    );
+    const { data } = await axios.get(`/api/orders/myorders/`, config);
 
     dispatch({
       type: ORDER_LIST_MY_SUCCESS,
