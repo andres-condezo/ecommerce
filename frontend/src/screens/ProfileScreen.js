@@ -41,7 +41,7 @@ const ProfileScreen = () => {
       return;
     }
 
-    if (!user || !user.name || success) {
+    if (!user || !user.name || success || userInfo._id !== Number(user._id)) {
       dispatch({ type: USER_UPDATE_PROFILE_RESET });
       dispatch(getUserDetails("profile"));
       dispatch(listMyOrders());
