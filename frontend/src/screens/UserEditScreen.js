@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Form, FormGroup, Button, Row, Col } from "react-bootstrap";
+import { Form, FormGroup, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { useLocation, useNavigate } from "react-router-dom";
 import { FormContainer } from "../components/FormContainer";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
@@ -12,21 +11,25 @@ export const UserEditScreen = () => {
   const dispatch = useDispatch();
   const params = useParams();
 
-  const { userId } = params;
+  const { id: userId } = params;
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const redirect = location.search ? location.search.split("=")[1] : "/";
-
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (!user || !user.name || user._id !== Number(userId)) {
+      dispatch(getUserDetails(userId));
+      return;
+    }
+
+    setName(user.name);
+    setEmail(user.email);
+    setIsAdmin(user.isAdmin);
+  }, [user, userId, dispatch]);
 
   const submitHandler = (e) => {
     e.preventDefault();
