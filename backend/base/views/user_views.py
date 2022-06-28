@@ -80,6 +80,25 @@ def getUserById(request, pk):
   return Response(serializer.data)
 
 
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateUser(request, pk):
+  user = User.objects.get(id=pk)
+
+  data = request.data
+
+  user.first_name = data['name']
+  user.username   = data['email']
+  user.email      = data['email']
+  user.is_staff   = data['isAdmin']
+
+  user.save()
+
+  serializer = UserSerializer(user, many=False)
+
+  return Response(serializer.data)
+
+
 @api_view(['POST'])
 def registerUser(request):
   data = request.data
