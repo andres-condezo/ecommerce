@@ -93,7 +93,7 @@ def registerUser(request):
 
 @api_view(['DELETE'])
 @permission_classes([IsAdminUser])
-def deleteUser(request, pḱ):
+def deleteUser(request, pk):
   userForDeletion = User.objects.get(id=pk)
   userForDeletion.delete()
   return Response('User was deleted')
