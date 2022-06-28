@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Form, FormGroup, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { FormContainer } from "../components/FormContainer";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { getUserDetails } from "../store/actions/userActions";
+import { getUserDetails, updateUser } from "../store/actions/userActions";
+import { USER_UPDATE_RESET } from "../store/constants/userConstants";
 
 export const UserEditScreen = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const params = useParams();
 
   const { id: userId } = params;
@@ -20,7 +22,20 @@ export const UserEditScreen = () => {
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
 
+  const userUpdate = useSelector((state) => state.userUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = userUpdate;
+
   useEffect(() => {
+    if (successUpdate) {
+      dispatch({ type: USER_UPDATE_RESET });
+      navigate("/admin/userlist");
+      return;
+    }
+
     if (!user || !user.name || user._id !== Number(userId)) {
       dispatch(getUserDetails(userId));
       return;
@@ -33,6 +48,7 @@ export const UserEditScreen = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(updateUser({ ...user, name, email, isAdmin }));
   };
 
   return (
