@@ -5,7 +5,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { listProducts } from "../store/actions/productActions";
+import { deleteProduct, listProducts } from "../store/actions/productActions";
 
 export const ProductListScreen = () => {
   const navigate = useNavigate();
@@ -14,6 +14,13 @@ export const ProductListScreen = () => {
 
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
+
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = productDelete;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -25,12 +32,13 @@ export const ProductListScreen = () => {
     }
 
     navigate("/login");
-  }, [userInfo, dispatch, navigate]);
+  }, [userInfo, dispatch, navigate, successDelete]);
 
-  const deleteHandler = (userId) => {
+  const deleteHandler = (productId) => {
     const message = "Are you sure to delete this user?";
 
     if (window.confirm(message)) {
+      dispatch(deleteProduct(productId));
     }
   };
 
@@ -49,6 +57,9 @@ export const ProductListScreen = () => {
           </Button>
         </Col>
       </Row>
+
+      {loadingDelete && <Loader />}
+      {errorDelete && <Message variant="danger">{errorDelete}</Message>}
 
       {loading ? (
         <Loader />
