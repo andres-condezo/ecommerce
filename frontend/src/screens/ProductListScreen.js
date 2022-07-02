@@ -35,7 +35,7 @@ export const ProductListScreen = () => {
   }, [userInfo, dispatch, navigate, successDelete]);
 
   const deleteHandler = (productId) => {
-    const message = "Are you sure to delete this user?";
+    const message = "Are you sure to delete this product?";
 
     if (window.confirm(message)) {
       dispatch(deleteProduct(productId));
