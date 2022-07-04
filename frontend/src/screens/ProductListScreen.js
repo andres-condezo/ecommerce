@@ -5,7 +5,12 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { deleteProduct, listProducts } from "../store/actions/productActions";
+import {
+  createProduct,
+  deleteProduct,
+  listProducts,
+} from "../store/actions/productActions";
+import { PRODUCT_CREATE_RESET } from "../store/constants/productConstants";
 
 export const ProductListScreen = () => {
   const navigate = useNavigate();
@@ -22,17 +27,39 @@ export const ProductListScreen = () => {
     success: successDelete,
   } = productDelete;
 
+  const productCreate = useSelector((state) => state.productCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    product: createdProduct,
+  } = productCreate;
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listProducts());
+    dispatch({ type: PRODUCT_CREATE_RESET });
+
+    if (!userInfo || !userInfo.isAdmin) {
+      navigate("/login");
       return;
     }
 
-    navigate("/login");
-  }, [userInfo, dispatch, navigate, successDelete]);
+    if (successCreate) {
+      navigate(`/admin/product/${createdProduct._id}`);
+      return;
+    }
+
+    dispatch(listProducts());
+  }, [
+    userInfo,
+    dispatch,
+    navigate,
+    successDelete,
+    successCreate,
+    createdProduct,
+  ]);
 
   const deleteHandler = (productId) => {
     const message = "Are you sure to delete this product?";
@@ -42,7 +69,9 @@ export const ProductListScreen = () => {
     }
   };
 
-  const createProductHandler = () => {};
+  const createProductHandler = () => {
+    dispatch(createProduct());
+  };
 
   return (
     <div>
@@ -60,6 +89,9 @@ export const ProductListScreen = () => {
 
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant="danger">{errorDelete}</Message>}
+
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
 
       {loading ? (
         <Loader />
