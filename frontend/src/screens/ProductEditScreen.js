@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Form, FormGroup, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FormContainer } from "../components/FormContainer";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { listProductDetails } from "../store/actions/productActions";
-import { getUserDetails, updateUser } from "../store/actions/userActions";
 
 export const ProductEditScreen = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const params = useParams();
 
   const { id: productId } = params;
