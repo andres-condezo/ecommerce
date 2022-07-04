@@ -8,6 +8,7 @@ import { LoginScreen } from "./screens/LoginScreen";
 import { OrderScreen } from "./screens/OrderScreen";
 import { PaymentScreen } from "./screens/PaymentScreen";
 import { PlaceorderScreen } from "./screens/PlaceorderScreen";
+import { ProductEditScreen } from "./screens/ProductEditScreen";
 import { ProductListScreen } from "./screens/ProductListScreen";
 import ProductScreen from "./screens/ProductScreen";
 import ProfileScreen from "./screens/ProfileScreen";
@@ -40,6 +41,10 @@ function App() {
             <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
 
             <Route path="/admin/productlist" element={<ProductListScreen />} />
+            <Route
+              path="/admin/products/:id/edit"
+              element={<ProductEditScreen />}
+            />
           </Routes>
         </Container>
       </main>
