@@ -3,6 +3,7 @@ import { Form, FormGroup, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FormContainer } from "../components/FormContainer";
+import axios from "axios";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import {
@@ -61,7 +62,29 @@ export const ProductEditScreen = () => {
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
-    console.log(file);
+    const formData = new FormData();
+
+    formData.append("image", file);
+    formData.append("product_id", productId);
+
+    setUploading(true);
+
+    try {
+      const config = {
+        headers: { "Content-Type": "multipart/form" },
+      };
+
+      const { data } = await axios.post(
+        "/api/products/upload-image/",
+        formData,
+        config
+      );
+
+      setImage(data);
+      setUploading(false);
+    } catch (error) {
+      setUploading(false);
+    }
   };
 
   const submitHandler = (e) => {
