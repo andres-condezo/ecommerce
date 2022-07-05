@@ -59,7 +59,7 @@ export const UserEditScreen = () => {
         <h1>Edit User</h1>
 
         {loadingUpdate && <Loader />}
-        {errorUpdate && <Message variant="danger">{error}Update</Message>}
+        {errorUpdate && <Message variant="danger">{errorUpdate}Update</Message>}
 
         {loading ? (
           <Loader />
