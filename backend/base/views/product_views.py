@@ -67,7 +67,7 @@ def deleteProduct(request, pk):
 
 
 @api_view(['POST'])
-def uploadImage(request, pk):
+def uploadImage(request):
   data = request.data
 
   product_id = data['product_id']
