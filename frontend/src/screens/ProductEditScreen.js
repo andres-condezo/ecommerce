@@ -26,6 +26,8 @@ export const ProductEditScreen = () => {
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
 
+  const [uploading, setUploading] = useState(false);
+
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
 
@@ -56,6 +58,10 @@ export const ProductEditScreen = () => {
     setCountInStock(product.countInStock);
     setDescription(product.description);
   }, [product, productId, dispatch, navigate, successUpdate]);
+
+  const uploadFileHandler = () => {
+    console.log("Updating image");
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -117,6 +123,14 @@ export const ProductEditScreen = () => {
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
               ></Form.Control>
+
+              <Form.File
+                id="image-file"
+                label="Choose file"
+                onChange={uploadFileHandler}
+              ></Form.File>
+
+              {uploading && <Loader />}
             </FormGroup>
 
             <FormGroup controlId="brand">
