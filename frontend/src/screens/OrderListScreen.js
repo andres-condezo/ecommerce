@@ -25,15 +25,7 @@ export const OrderListScreen = () => {
     }
 
     navigate("/login");
-  }, [userInfo, dispatch, navigate, listOrders]);
-
-  const deleteHandler = (userId) => {
-    const message = "Are you sure to delete this user?";
-
-    if (window.confirm(message)) {
-      dispatch(deleteUser(userId));
-    }
-  };
+  }, [userInfo, dispatch, navigate]);
 
   return (
     <div>
