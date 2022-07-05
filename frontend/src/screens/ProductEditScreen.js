@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Form, FormGroup, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { FormContainer } from "../components/FormContainer";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { listProductDetails } from "../store/actions/productActions";
+import {
+  listProductDetails,
+  updateProduct,
+} from "../store/actions/productActions";
+import { PRODUCT_UPDATE_RESET } from "../store/constants/productConstants";
 
 export const ProductEditScreen = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const params = useParams();
 
   const { id: productId } = params;
@@ -24,14 +29,20 @@ export const ProductEditScreen = () => {
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
 
-  const userUpdate = useSelector((state) => state.userUpdate);
+  const productUpdate = useSelector((state) => state.productUpdate);
   const {
     loading: loadingUpdate,
     error: errorUpdate,
     success: successUpdate,
-  } = userUpdate;
+  } = productUpdate;
 
   useEffect(() => {
+    if (successUpdate) {
+      dispatch({ type: PRODUCT_UPDATE_RESET });
+      navigate("/admin/productlist");
+      return;
+    }
+
     if (!product || !product.name || product._id !== Number(productId)) {
       dispatch(listProductDetails(productId));
       return;
@@ -44,11 +55,22 @@ export const ProductEditScreen = () => {
     setCategory(product.category);
     setCountInStock(product.countInStock);
     setDescription(product.description);
-  }, [product, productId, dispatch]);
+  }, [product, productId, dispatch, navigate, successUpdate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // Update product
+    dispatch(
+      updateProduct({
+        _id: productId,
+        name,
+        price,
+        image,
+        brand,
+        category,
+        countInStock,
+        description,
+      })
+    );
   };
 
   return (
@@ -59,7 +81,7 @@ export const ProductEditScreen = () => {
         <h1>Edit Product</h1>
 
         {loadingUpdate && <Loader />}
-        {errorUpdate && <Message variant="danger">{error}Update</Message>}
+        {errorUpdate && <Message variant="danger">{errorUpdate}Update</Message>}
 
         {loading ? (
           <Loader />
