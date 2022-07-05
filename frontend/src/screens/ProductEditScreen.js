@@ -59,8 +59,9 @@ export const ProductEditScreen = () => {
     setDescription(product.description);
   }, [product, productId, dispatch, navigate, successUpdate]);
 
-  const uploadFileHandler = () => {
-    console.log("Updating image");
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    console.log(file);
   };
 
   const submitHandler = (e) => {
@@ -118,17 +119,10 @@ export const ProductEditScreen = () => {
             <FormGroup controlId="image">
               <Form.Label>Image</Form.Label>
               <Form.Control
-                type="text"
-                placeholder="Enter image"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              ></Form.Control>
-
-              <Form.File
-                id="image-file"
-                label="Choose file"
+                type="file"
+                placeholder="Choose file"
                 onChange={uploadFileHandler}
-              ></Form.File>
+              ></Form.Control>
 
               {uploading && <Loader />}
             </FormGroup>
