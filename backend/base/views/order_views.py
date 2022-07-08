@@ -1,5 +1,5 @@
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
 from rest_framework.response import Response
 
@@ -101,3 +101,15 @@ def updateOrderToPay(request, pk):
   order.save()
 
   return Response('Order was paid')
+
+
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def updateOrderAsDelivered(request, pk):
+  order = Order.objects.get(_id=pk)
+
+  order.isDelivered = True
+  order.deliveredAt = datetime.now()
+  order.save()
+
+  return Response('Order was delivered')
