@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Card, Col, Image, ListGroup, Row } from "react-bootstrap";
+import { Button, Card, Col, Image, ListGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { PayPalButton } from "react-paypal-button-v2";
-import { getOrderDetails, payOrder } from "../store/actions/orderActions";
+import {
+  deliverOrder,
+  getOrderDetails,
+  payOrder,
+} from "../store/actions/orderActions";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { ORDER_PAY_RESET } from "../store/constants/orderConstants";
+import {
+  ORDER_DELIVER_RESET,
+  ORDER_PAY_RESET,
+} from "../store/constants/orderConstants";
 
 export const OrderScreen = () => {
   const dispatch = useDispatch();
@@ -21,6 +28,12 @@ export const OrderScreen = () => {
 
   const orderPay = useSelector((state) => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
+
+  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   if (!loading && !error) {
     order.itemsPrice = order.orderItems.reduce(
@@ -43,8 +56,14 @@ export const OrderScreen = () => {
   };
 
   useEffect(() => {
-    if (successPay || !order || order._id !== Number(orderId)) {
+    if (
+      successPay ||
+      !order ||
+      order._id !== Number(orderId) ||
+      successDeliver
+    ) {
       dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: ORDER_DELIVER_RESET });
       dispatch(getOrderDetails(orderId));
       return;
     }
@@ -63,6 +82,10 @@ export const OrderScreen = () => {
 
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(orderId, paymentResult));
+  };
+
+  const deliverHandler = (paymentResult) => {
+    dispatch(deliverOrder(order));
   };
 
   return loading ? (
@@ -209,6 +232,23 @@ export const OrderScreen = () => {
                   )}
                 </ListGroup.Item>
               )}
+
+              {loadingDeliver && <Loader />}
+
+              {userInfo &&
+                userInfo.isAdmin &&
+                order.isPaid &&
+                !order.isDelivered && (
+                  <ListGroup.Item>
+                    <Button
+                      type="button"
+                      className="btn btn-block"
+                      onClick={deliverHandler}
+                    >
+                      Mark As Delivered
+                    </Button>
+                  </ListGroup.Item>
+                )}
             </ListGroup>
           </Card>
         </Col>
