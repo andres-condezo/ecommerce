@@ -8,7 +8,7 @@ from rest_framework import status
 from base.models import Order, OrderItem, Product, ShippingAddress
 from base.serializers import OrderSerializer
 
-from datetime import datetime
+from django.utils import timezone
 
 
 @api_view(['POST'])
@@ -97,7 +97,7 @@ def updateOrderToPay(request, pk):
   order = Order.objects.get(_id=pk)
 
   order.isPaid = True
-  order.paidAt = datetime.now()
+  order.paidAt = timezone.now()
   order.save()
 
   return Response('Order was paid')
@@ -109,7 +109,7 @@ def updateOrderAsDelivered(request, pk):
   order = Order.objects.get(_id=pk)
 
   order.isDelivered = True
-  order.deliveredAt = datetime.now()
+  order.deliveredAt = timezone.now()
   order.save()
 
   return Response('Order was delivered')
