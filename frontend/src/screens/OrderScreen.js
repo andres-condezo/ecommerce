@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Image, ListGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { PayPalButton } from "react-paypal-button-v2";
 import {
   deliverOrder,
@@ -17,6 +17,7 @@ import {
 
 export const OrderScreen = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [sdkReady, setSdkReady] = useState(false);
 
@@ -56,6 +57,11 @@ export const OrderScreen = () => {
   };
 
   useEffect(() => {
+    if (!userInfo) {
+      navigate("/login");
+      return;
+    }
+
     if (
       successPay ||
       !order ||
