@@ -84,7 +84,15 @@ export const OrderScreen = () => {
     }
 
     setSdkReady(true);
-  }, [dispatch, successPay, order, orderId]);
+  }, [
+    dispatch,
+    successPay,
+    order,
+    orderId,
+    userInfo,
+    navigate,
+    successDeliver,
+  ]);
 
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(orderId, paymentResult));
