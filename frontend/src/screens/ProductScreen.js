@@ -11,9 +11,13 @@ import {
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Rating from "../components/Rating";
-import { listProductDetails } from "../store/actions/productActions";
+import {
+  createProductReview,
+  listProductDetails,
+} from "../store/actions/productActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import { PRODUCT_CREATE_REVIEW_RESET } from "../store/constants/productConstants";
 
 function ProductScreen() {
   const params = useParams();
@@ -38,8 +42,14 @@ function ProductScreen() {
   } = productReviewCreate;
 
   useEffect(() => {
+    if (successProductReview) {
+      setRating(0);
+      setComment("");
+      dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
+    }
+
     dispatch(listProductDetails(params.id));
-  }, [dispatch, params.id]);
+  }, [dispatch, params.id, successProductReview]);
 
   const addToCartHandler = () => {
     navigate(`/cart/${params.id}?qty=${qty}`);
@@ -47,6 +57,9 @@ function ProductScreen() {
 
   const submitHandler = (e) => {
     e.preventDefault();
+
+    const productId = params.id;
+    dispatch(createProductReview(productId, { rating, comment }));
   };
 
   return (
