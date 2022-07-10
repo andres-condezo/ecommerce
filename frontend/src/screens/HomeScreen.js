@@ -5,14 +5,19 @@ import Product from "../components/Product";
 import { listProducts } from "../store/actions/productActions";
 import Spinner from "../components/Loader";
 import Message from "../components/Message";
+import { useLocation, useParams } from "react-router-dom";
 
 function HomeScreen() {
+  const location = useLocation();
+
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
 
+  const queryParams = location.search;
+
   useEffect(() => {
-    dispatch(listProducts());
+    dispatch(listProducts(queryParams));
   }, []);
 
   return (
