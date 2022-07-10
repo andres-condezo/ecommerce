@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 
 export const SearchBox = () => {
   const [keyword, setKeyword] = useState();
@@ -10,16 +10,22 @@ export const SearchBox = () => {
 
   return (
     <Form onSubmit={submitHandler} inline>
-      <Form.Control
-        type="text"
-        name="q"
-        onChange={(e) => setKeyword(e.target.value)}
-        className="mr-sm-2 ml-sm-5"
-      ></Form.Control>
+      <Row>
+        <Col>
+          <Form.Control
+            type="text"
+            name="q"
+            onChange={(e) => setKeyword(e.target.value)}
+            className="mr-sm-2 ml-sm-5"
+          ></Form.Control>
+        </Col>
 
-      <Button type="submit" variant="outline-success" className="p-2">
-        Submit
-      </Button>
+        <Col>
+          <Button type="submit" variant="outline-success" className="p-2">
+            Submit
+          </Button>
+        </Col>
+      </Row>
     </Form>
   );
 };
