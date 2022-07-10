@@ -42,6 +42,10 @@ function ProductScreen() {
   } = productReviewCreate;
 
   useEffect(() => {
+    dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
+  }, [dispatch]);
+
+  useEffect(() => {
     if (successProductReview) {
       setRating(0);
       setComment("");
