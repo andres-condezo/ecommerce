@@ -16,7 +16,7 @@ export const SearchBox = () => {
   };
 
   return (
-    <Form onSubmit={submitHandler} inline>
+    <Form onSubmit={submitHandler}>
       <Row>
         <Col>
           <Form.Control
