@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "react-bootstrap";
 import Product from "../components/Product";
 import { listProducts } from "../store/actions/productActions";
 import Spinner from "../components/Loader";
 import Message from "../components/Message";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 function HomeScreen() {
   const location = useLocation();
@@ -18,7 +18,7 @@ function HomeScreen() {
 
   useEffect(() => {
     dispatch(listProducts(queryParams));
-  }, []);
+  }, [dispatch, queryParams]);
 
   return (
     <div>
