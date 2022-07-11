@@ -12,8 +12,10 @@ import {
   listProducts,
 } from "../store/actions/productActions";
 import { PRODUCT_CREATE_RESET } from "../store/constants/productConstants";
+import { useLocation } from "react-router-dom";
 
 export const ProductListScreen = () => {
+  const location = useLocation();
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -39,6 +41,11 @@ export const ProductListScreen = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const queryParams = location.search;
+  const regex = /keyword=((?:[^&])*)/;
+  const match = queryParams.match(regex);
+  const keyword = (match && match[1]) || "";
+
   useEffect(() => {
     dispatch({ type: PRODUCT_CREATE_RESET });
 
@@ -52,7 +59,7 @@ export const ProductListScreen = () => {
       return;
     }
 
-    dispatch(listProducts());
+    dispatch(listProducts(queryParams));
   }, [
     userInfo,
     dispatch,
@@ -60,6 +67,7 @@ export const ProductListScreen = () => {
     successDelete,
     successCreate,
     createdProduct,
+    queryParams,
   ]);
 
   const deleteHandler = (productId) => {
@@ -146,7 +154,7 @@ export const ProductListScreen = () => {
             </tbody>
           </Table>
 
-          <Paginate page={page} pages={pages} isAdmin />
+          <Paginate page={page} pages={pages} keyword={keyword} isAdmin />
         </>
       )}
     </div>
