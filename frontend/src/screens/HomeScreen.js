@@ -17,6 +17,10 @@ function HomeScreen() {
 
   const queryParams = location.search;
 
+  const regex = /keyword=((?:[^&])*)/;
+  const match = queryParams.match(regex);
+  const keyword = (match && match[1]) || "";
+
   useEffect(() => {
     dispatch(listProducts(queryParams));
   }, [dispatch, queryParams]);
@@ -38,7 +42,7 @@ function HomeScreen() {
             ))}
           </Row>
 
-          <Paginate page={page} pages={pages} keyword={queryParams} />
+          <Paginate page={page} pages={pages} keyword={keyword} />
         </>
       )}
     </div>
