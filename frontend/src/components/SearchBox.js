@@ -11,7 +11,7 @@ export const SearchBox = () => {
     e.preventDefault();
 
     if (keyword) {
-      navigate(`/?keyword=${keyword}&page=1`);
+      navigate(`?keyword=${keyword}&page=1`);
     }
   };
 
