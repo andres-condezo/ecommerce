@@ -5,12 +5,11 @@ import { Row, Col, ListGroup, Image, Form, Button, Card} from 'react-bootstrap';
 import Message from '../components/Message';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 
-function CartScreen({history}) {
+function CartScreen() {
   const params = useParams();
   const productId = params.id
   const location = useLocation();
   const qty = location.search ? Number(location.search.split('=')[1]) : 1;
-
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart);
   const { cartItems } = cart;
@@ -39,6 +38,7 @@ function CartScreen({history}) {
             <Message variant='info'>
               Your cart is empty <Link to='/'>Go Back</Link>
             </Message>
+
           ) : (
             <ListGroup variant='flush'>
             {cartItems.map(item => (
@@ -47,12 +47,15 @@ function CartScreen({history}) {
                   <Col md={2}>
                     <Image src={item.image} alt={item.name} fluid rounded />
                   </Col>
+
                   <Col md={3}>
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </Col>
+
                   <Col md={2}>
                     ${item.price}
                   </Col>
+
                   <Col md={3}>
                     <Form.Control
                       as="select"
@@ -78,7 +81,6 @@ function CartScreen({history}) {
                       <i className='fas fa-trash'></i>
                     </Button>
                   </Col>
-
                 </Row>
               </ListGroup.Item>
             ))}
@@ -104,7 +106,6 @@ function CartScreen({history}) {
               Proceed To Checkout
             </Button>
           </ListGroup.Item>
-
         </Card>
       </Col>
     </Row>
