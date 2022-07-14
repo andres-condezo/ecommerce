@@ -195,24 +195,23 @@ export const createProductReview =
     }
   };
 
-export const listTopProducts =
-  (productId, review) => async (dispatch, getState) => {
-    try {
-      dispatch({ type: PRODUCT_TOP_REQUEST });
+export const listTopProducts = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: PRODUCT_TOP_REQUEST });
 
-      const { data } = await axios.get(`/api/products/top/`);
+    const { data } = await axios.get(`/api/products/top/`);
 
-      dispatch({
-        type: PRODUCT_TOP_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: PRODUCT_TOP_FAIL,
-        payload:
-          error.response && error.response.data.detail
-            ? error.response.data.detail
-            : error.message,
-      });
-    }
-  };
+    dispatch({
+      type: PRODUCT_TOP_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_TOP_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
