@@ -7,6 +7,7 @@ import Spinner from "../components/Loader";
 import Message from "../components/Message";
 import { useLocation } from "react-router-dom";
 import { Paginate } from "../components/Paginate";
+import { ProductCarousel } from "../components/ProductCarousel";
 
 function HomeScreen() {
   const location = useLocation();
@@ -27,6 +28,8 @@ function HomeScreen() {
 
   return (
     <div>
+      <ProductCarousel />
+
       <h1>Latest products</h1>
       {loading ? (
         <Spinner />
