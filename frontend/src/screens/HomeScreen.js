@@ -28,7 +28,7 @@ function HomeScreen() {
 
   return (
     <div>
-      <ProductCarousel />
+      {!keyword && <ProductCarousel />}
 
       <h1>Latest products</h1>
       {loading ? (
