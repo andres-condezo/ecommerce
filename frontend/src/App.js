@@ -1,5 +1,5 @@
 import { Container } from "react-bootstrap";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import CartScreen from "./screens/CartScreen";
@@ -20,7 +20,7 @@ import { UserListScreen } from "./screens/UserListScreen";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Header />
 
       <main className="py-3">
@@ -51,7 +51,7 @@ function App() {
         </Container>
       </main>
       <Footer />
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
